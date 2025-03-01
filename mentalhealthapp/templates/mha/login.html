@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login | Mental Health App</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+
+    <script>
+        function login() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    var user = userCredential.user;
+                    fetchUserRole(user.uid);
+                })
+                .catch((error) => {
+                    alert(error.message);
+                });
+        }
+
+        function fetchUserRole(uid) {
+            fetch(`/get-user-role/${uid}/`) // Call Django API to get the role
+                .then(response => response.json())
+                .then(data => {
+                    if (data.role === "therapist") {
+                        window.location.href = "therapist_dashboard.html";
+                    } else {
+                        window.location.href = "user_dashboard.html";
+                    }
+                })
+                .catch(error => {
+                    alert("Error fetching role: " + error.message);
+                });
+        }
+    </script>
+</body>
+</html>
