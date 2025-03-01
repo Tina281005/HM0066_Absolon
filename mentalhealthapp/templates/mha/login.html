@@ -1,17 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Mental Health App</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <script src="firebase-config.js"></script>
+
+    <style>
+        /* Apply general styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #B2DFDB, #80CBC4); /* Calm green gradient */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Container box for login */
+        .login-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+
+        /* Heading */
+        h2 {
+            color: #00796B; /* Deep Teal */
+            margin-bottom: 20px;
+        }
+
+        /* Input fields */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #B2DFDB;
+            border-radius: 6px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        /* Button styles */
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #00796B;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #004D40;
+        }
+
+        /* Signup link */
+        .signup-link {
+            margin-top: 15px;
+            display: block;
+            font-size: 14px;
+            color: #004D40;
+        }
+
+        .signup-link a {
+            color: #00796B;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h2>Login</h2>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button class="login-btn" onclick="login()">Login</button>
+        <p class="signup-link">Don't have an account? <a href="signup.html">Sign up now</a></p>
+    </div>
 
     <script>
         function login() {
@@ -43,5 +125,6 @@
                 });
         }
     </script>
+
 </body>
 </html>
