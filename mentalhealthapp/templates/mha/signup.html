@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ role }} Signup</title>
     <style>
-        /* General Reset */
+        /* General Styles */
         * {
             margin: 0;
             padding: 0;
@@ -14,74 +14,82 @@
         }
 
         body {
-            background: linear-gradient(to right, #e0f7fa, #f0f8ff);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background: linear-gradient(135deg, #E3FDFD, #FFE6FA);
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 15px;
-            padding: 30px;
-            width: 350px;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            width: 350px;
         }
 
         h2 {
-            color: #007bff;
-            margin-bottom: 20px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            font-weight: 500;
+            color: #555;
         }
 
         input, select, textarea {
             width: 100%;
             padding: 10px;
-            border: none;
+            margin-top: 5px;
+            border: 1px solid #ddd;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.6);
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            font-size: 16px;
+            font-size: 1rem;
+            transition: 0.3s ease-in-out;
+        }
+
+        input:focus, select:focus, textarea:focus {
             outline: none;
+            border-color: #6a89cc;
+            box-shadow: 0px 0px 6px rgba(106, 137, 204, 0.5);
         }
 
         button {
-            background: #007bff;
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            background: #6a89cc;
             color: white;
-            padding: 12px;
             border: none;
             border-radius: 8px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 16px;
-            font-weight: 500;
+            transition: 0.3s ease;
         }
 
         button:hover {
-            background: #0056b3;
-            transform: scale(1.05);
-            box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.3);
+            background: #4a69bd;
         }
 
-        a {
-            display: block;
+        .footer-text {
             margin-top: 15px;
-            color: #007bff;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .footer-text a {
+            color: #6a89cc;
             text-decoration: none;
             font-weight: 500;
-            transition: 0.3s;
         }
 
-        a:hover {
+        .footer-text a:hover {
             text-decoration: underline;
         }
     </style>
@@ -95,7 +103,7 @@
             {{ form.as_p }}
             <button type="submit">Sign Up</button>
         </form>
-        <a href="{% url 'login' %}">Already have an account? Login</a>
+        <p class="footer-text">Already have an account? <a href="{% url 'login' %}">Login</a></p>
     </div>
 
 </body>
