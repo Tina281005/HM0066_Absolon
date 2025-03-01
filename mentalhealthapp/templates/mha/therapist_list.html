@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therapists</title>
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        nav {
+            width: 100%;
+            background: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .therapist-card {
+            background: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .therapist-card:hover {
+            transform: scale(1.05);
+        }
+        .therapist-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .status {
+            font-weight: bold;
+        }
+        .online {
+            color: green;
+        }
+        .offline {
+            color: red;
+        }
+        .buttons {
+            margin-top: 15px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <nav>
+        <h1 style="color: #007bff; font-size: 24px; font-weight: bold;">Therapists</h1>
+        <a href="dashboard.html" style="text-decoration: none; color: white; background: #007bff; padding: 10px 20px; border-radius: 5px;">Back to Dashboard</a>
+    </nav>
+    
+    <!-- Therapists List -->
+    <div class="container" id="therapist-list">
+        <!-- Static therapists data for now -->
+        <div class="therapist-card" onclick="showDetails('Dr. Jane Doe', 'Psychologist', 'PhD in Clinical Psychology', 'Harvard University', true)">
+            <img src="therapist1.jpg" alt="Dr. Jane Doe" class="therapist-photo">
+            <h2>Dr. Jane Doe</h2>
+            <p>Speciality: Psychologist</p>
+            <p>Degree: PhD in Clinical Psychology</p>
+            <p>College: Harvard University</p>
+            <span class="status online">Online</span>
+        </div>
+        <div class="therapist-card" onclick="showDetails('Dr. John Smith', 'Therapist', 'MSc in Mental Health', 'Stanford University', false)">
+            <img src="therapist2.jpg" alt="Dr. John Smith" class="therapist-photo">
+            <h2>Dr. John Smith</h2>
+            <p>Speciality: Therapist</p>
+            <p>Degree: MSc in Mental Health</p>
+            <p>College: Stanford University</p>
+            <span class="status offline">Offline</span>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Mental Wellness App</p>
+    </footer>
+    
+    <script>
+        function showDetails(name, speciality, degree, college, isOnline) {
+            alert(`Therapist: ${name}\nSpeciality: ${speciality}\nDegree: ${degree}\nCollege: ${college}\nStatus: ${isOnline ? 'Online' : 'Offline'}`);
+            // Future backend connection to fetch detailed therapist profile
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Care Tips</title>
+    <style>
+        body {
+            background-color: #f4f4f9;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: center;
+        }
+        .question {
+            font-size: 18px;
+            margin: 15px 0;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .tips {
+            display: none;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Personalized Self-Care Tips</h2>
+        <p class="question">How are you feeling today?</p>
+        <select id="mood">
+            <option value="stressed">Stressed</option>
+            <option value="tired">Tired</option>
+            <option value="happy">Happy</option>
+            <option value="anxious">Anxious</option>
+        </select>
+        <p class="question">How much sleep did you get last night?</p>
+        <select id="sleep">
+            <option value="less">Less than 5 hours</option>
+            <option value="normal">5-8 hours</option>
+            <option value="more">More than 8 hours</option>
+        </select>
+        <button onclick="getTips()">Get Self-Care Tips</button>
+        <div class="tips" id="tips"></div>
+    </div>
+    <script>
+        function getTips() {
+            let mood = document.getElementById("mood").value;
+            let sleep = document.getElementById("sleep").value;
+            let tipsDiv = document.getElementById("tips");
+            let tips = "";
+            
+            if (mood === "stressed") {
+                tips += "- Take deep breaths and try meditation.\n";
+                tips += "- Go for a walk to clear your mind.\n";
+            } else if (mood === "tired") {
+                tips += "- Drink plenty of water and take short breaks.\n";
+                tips += "- Try power naps if possible.\n";
+            } else if (mood === "happy") {
+                tips += "- Keep up the good vibes! Maybe share your happiness with someone.\n";
+                tips += "- Express gratitude for what made you happy today.\n";
+            } else if (mood === "anxious") {
+                tips += "- Write down your thoughts in a journal.\n";
+                tips += "- Listen to calming music or practice mindfulness.\n";
+            }
+            
+            if (sleep === "less") {
+                tips += "- Try to get more rest tonight, sleep is important for well-being.\n";
+            } else if (sleep === "more") {
+                tips += "- Too much sleep can also make you feel sluggish; balance is key.\n";
+            }
+            
+            tipsDiv.innerText = tips;
+            tipsDiv.style.display = "block";
+        }
+    </script>
+</body>
+</html>
