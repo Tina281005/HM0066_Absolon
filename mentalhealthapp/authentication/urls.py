@@ -14,6 +14,12 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),  # Ensure this matches
     path('dashboard/', views.dashboard, name='dashboard'),
     path('logout/', views.logout_view, name='logout'),  
+    path("therapist_list/", views.therapist_list, name="therapist_list"),
+    path("therapist/<int:therapist_id>/", views.therapist_detail, name="therapist_detail"),
+    path("chat/<int:therapist_id>/", views.start_chat, name="start_chat"),
+    path("chat_room/<int:room_id>/", views.send_message, name="chat_room"),
+    path("call/<int:therapist_id>/", views.call_request, name="call_request"),
+    path("call_request/<int:request_id>/<str:action>/", views.handle_call_request, name="handle_call_request"),
 
     path('intelligence_test/', views.intelligence_test, name='intelligence_test'),
     path('personality_test/', views.personality_test, name='personality_test'),
@@ -31,3 +37,8 @@ urlpatterns = [
     path('PTSD/', views.PTSD, name='PTSD'),
 
 ]
+
+
+
+   
+
