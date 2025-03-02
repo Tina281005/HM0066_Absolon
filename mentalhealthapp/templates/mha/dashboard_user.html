@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mental Health Dashboard</title>
     <style>
-        /* General Reset */
         * {
             margin: 0;
             padding: 0;
@@ -14,145 +13,96 @@
         }
 
         body {
-            background: linear-gradient(to right, #e0f7fa, #f0f8ff);
+            display: flex;
+            height: 100vh;
+            background: #f4f6f9;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #007bff;
+            color: white;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        /* Navbar */
-        nav {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(15px);
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 12px;
-        }
-
-        nav h1 {
-            color: #007bff;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        button {
-            background: rgba(0, 123, 255, 0.8);
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        button:hover {
-            background: rgba(0, 123, 255, 1);
-            transform: scale(1.05);
-            box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.3);
-        }
-
-        /* Dashboard Layout */
-        .dashboard {
-            width: 100%;
-            max-width: 900px;
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
 
-        /* Card Design */
+        .sidebar h2 {
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a, .logout-btn, .therapist-btn {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            border-radius: 5px;
+            transition: background 0.3s;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .sidebar a:hover, .logout-btn:hover, .therapist-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            text-align: center;
+            font-weight: bold;
+            border: none;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
         .card {
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(15px);
-            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 15px;
-            padding: 25px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            transition: 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .card h2 {
-            font-size: 1.6rem;
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            font-size: 1rem;
-            color: #333;
-            opacity: 0.8;
-        }
-
-        /* Footer */
-        footer {
-            margin-top: 40px;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-        }
-
-        /* Responsive Grid */
-        @media (max-width: 600px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
 <body>
-    
-    <!-- Navbar -->
-    <nav>
-        <h1>Mental Wellness</h1>
-        <button>Therapist</button>
-    </nav>
-    
-    <!-- Dashboard Container -->
-    <div class="dashboard">
-        <!-- Mood Tracker -->
-        <div class="card">
-            <h2>Mood Tracker</h2>
-            <p>Track how you feel daily and observe patterns.</p>
-        </div>
-        
-        <!-- Journal Section -->
-        <div class="card">
-            <h2>Your Journal</h2>
-            <p>Write your thoughts and reflections.</p>
-        </div>
-        
-        <!-- Self-Care Tips -->
-        <div class="card">
-            <h2>Self-Care Tips</h2>
-            <p>Daily reminders to take care of yourself.</p>
-        </div>
-        
-        <!-- Upcoming Therapy Sessions -->
-        <div class="card">
-            <h2>Upcoming Sessions</h2>
-            <p>Stay updated with your appointments.</p>
+    <div class="sidebar">
+        <h2>Mental Health Panel</h2>
+        <a href="#">Dashboard</a>
+        <a href="#">Mood Tracker</a>
+        <a href="#">Journal</a>
+        <a href="#">Self-Care Tips</a>
+        <a href="#">Therapy Sessions</a>
+        <a href="{% url 'therapist_list' %}" class="therapist-btn">Find a Therapist</a>
+        <form id="logoutForm" method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+
+    <div class="content">
+        <div class="dashboard-cards">
+            <div class="card">
+                <h3>Mood Tracker</h3>
+                <p>Track how you feel daily and observe patterns.</p>
+            </div>
+            <div class="card">
+                <h3>Your Journal</h3>
+                <p>Write your thoughts and reflections.</p>
+            </div>
         </div>
     </div>
-    
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Mental Wellness App</p>
-    </footer>
-    
+
 </body>
 </html>

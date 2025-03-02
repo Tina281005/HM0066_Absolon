@@ -64,8 +64,6 @@
             margin-top: 15px;
         }
         button {
-            background-color: #007bff;
-            color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
@@ -73,7 +71,18 @@
             margin-right: 10px;
             transition: background 0.3s;
         }
-        button:hover {
+        .call-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .call-btn:hover {
+            background-color: #218838;
+        }
+        .chat-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        .chat-btn:hover {
             background-color: #0056b3;
         }
         footer {
@@ -93,22 +102,32 @@
     
     <!-- Therapists List -->
     <div class="container" id="therapist-list">
-        <!-- Static therapists data for now -->
-        <div class="therapist-card" onclick="showDetails('Dr. Jane Doe', 'Psychologist', 'PhD in Clinical Psychology', 'Harvard University', true)">
+        <!-- Therapist 1 -->
+        <div class="therapist-card">
             <img src="therapist1.jpg" alt="Dr. Jane Doe" class="therapist-photo">
             <h2>Dr. Jane Doe</h2>
             <p>Speciality: Psychologist</p>
             <p>Degree: PhD in Clinical Psychology</p>
             <p>College: Harvard University</p>
             <span class="status online">Online</span>
+            <div class="buttons">
+                <button class="call-btn" onclick="callTherapist('Dr. Jane Doe')">Call</button>
+                <button class="chat-btn" onclick="chatWithTherapist('Dr. Jane Doe')">Chat</button>
+            </div>
         </div>
-        <div class="therapist-card" onclick="showDetails('Dr. John Smith', 'Therapist', 'MSc in Mental Health', 'Stanford University', false)">
+
+        <!-- Therapist 2 -->
+        <div class="therapist-card">
             <img src="therapist2.jpg" alt="Dr. John Smith" class="therapist-photo">
             <h2>Dr. John Smith</h2>
             <p>Speciality: Therapist</p>
             <p>Degree: MSc in Mental Health</p>
             <p>College: Stanford University</p>
             <span class="status offline">Offline</span>
+            <div class="buttons">
+                <button class="call-btn" onclick="callTherapist('Dr. John Smith')">Call</button>
+                <button class="chat-btn" onclick="chatWithTherapist('Dr. John Smith')">Chat</button>
+            </div>
         </div>
     </div>
     
@@ -118,10 +137,16 @@
     </footer>
     
     <script>
-        function showDetails(name, speciality, degree, college, isOnline) {
-            alert(`Therapist: ${name}\nSpeciality: ${speciality}\nDegree: ${degree}\nCollege: ${college}\nStatus: ${isOnline ? 'Online' : 'Offline'}`);
-            // Future backend connection to fetch detailed therapist profile
+        function callTherapist(name) {
+            alert(`Calling ${name}...`);
+            // Future implementation: Integrate with WebRTC or VoIP API
+        }
+
+        function chatWithTherapist(name) {
+            alert(`Opening chat with ${name}...`);
+            // Future implementation: Redirect to a chat page or chat popup
         }
     </script>
+
 </body>
 </html>

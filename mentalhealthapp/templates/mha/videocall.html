@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Call</title>
+    <script>
+        const roomName = "{{ room_name }}";
+        const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
+        const socket = new WebSocket(`${wsProtocol}://${window.location.host}/ws/video/${roomName}/`);
+
+        let localStream;
+        let remoteStream;
+        let peerConnection;
+        const config = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
+
+        async function startCall() {
+            localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            document.getElementById("localVideo").srcObject = localStream;
+
+            peerConnection = new RTCPeerConnection(config);
+            localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+
+            peerConnection.ontrack = event => {
+                if (!remoteStream) {
+                    remoteStream = new MediaStream();
+                    document.getElementById("remoteVideo").srcObject = remoteStream;
+                }
+                remoteStream.addTrack(event.track);
+            };
+
+            peerConnection.onicecandidate = event => {
+                if (event.candidate) {
+                    socket.send(JSON.stringify({ type: "video_signal", candidate: event.candidate }));
+                }
+            };
+
+            let offer = await peerConnection.createOffer();
+            await peerConnection.setLocalDescription(offer);
+            socket.send(JSON.stringify({ type: "video_signal", offer }));
+        }
+
+        socket.onmessage = async event => {
+            const data = JSON.parse(event.data);
+
+            if (data.type === "video_signal") {
+                if (data.offer) {
+                    await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+                    let answer = await peerConnection.createAnswer();
+                    await peerConnection.setLocalDescription(answer);
+                    socket.send(JSON.stringify({ type: "video_signal", answer }));
+                } else if (data.answer) {
+                    await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
+                } else if (data.candidate) {
+                    await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+                }
+            } else if (data.type === "chat_message") {
+                const chatBox = document.getElementById("chatBox");
+                chatBox.innerHTML += `<p><strong>${data.sender}:</strong> ${data.message}</p>`;
+            }
+        };
+
+        function sendMessage() {
+            const messageInput = document.getElementById("messageInput");
+            socket.send(JSON.stringify({ type: "chat_message", sender: "User", message: messageInput.value }));
+            messageInput.value = "";
+        }
+    </script>
+</head>
+<body>
+    <h2>Video Call Room: {{ room_name }}</h2>
+    
+    <div>
+        <video id="localVideo" autoplay playsinline muted></video>
+        <video id="remoteVideo" autoplay playsinline></video>
+    </div>
+
+    <button onclick="startCall()">Start Call</button>
+
+    <div>
+        <input type="text" id="messageInput" placeholder="Type a message">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <div id="chatBox"></div>
+</body>
+</html>

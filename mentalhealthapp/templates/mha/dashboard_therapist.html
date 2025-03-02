@@ -1,10 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Therapist Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background: #f4f6f9;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #28a745;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar h2 {
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a, .logout-btn, .join-call-btn {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            border-radius: 5px;
+            transition: background 0.3s;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .sidebar a:hover, .logout-btn:hover, .join-call-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .dashboard-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .appointment-list, .request-list, .message-list {
+            list-style: none;
+        }
+
+        .appointment-item, .request-item, .message-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .accept-btn, .decline-btn {
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .accept-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .decline-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .video-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Welcome, Therapist!</h2>
-    <a href="{% url 'logout' %}">Logout</a>
+    <div class="sidebar">
+        <h2>Therapist Panel</h2>
+        <a href="#">Dashboard</a>
+        <a href="#">Patient Records</a>
+        <a href="#">Sessions</a>
+        <a href="#">Appointments</a>
+        <a href="#">Requests</a>
+        <a href="#">Messages</a>
+        <button class="join-call-btn" onclick="joinCall()">Join Call</button>
+        <form id="logoutForm" method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+
+    <div class="content">
+        <!-- Appointments Section -->
+        <div class="dashboard-section">
+            <h3>Upcoming Appointments</h3>
+            <ul class="appointment-list">
+                <li class="appointment-item">
+                    John Doe - March 5, 2025 - 3:00 PM
+                    <button class="accept-btn">Confirm</button>
+                    <button class="decline-btn">Cancel</button>
+                </li>
+                <li class="appointment-item">
+                    Jane Smith - March 6, 2025 - 10:00 AM
+                    <button class="accept-btn">Confirm</button>
+                    <button class="decline-btn">Cancel</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Requests Section -->
+        <div class="dashboard-section">
+            <h3>Pending Requests</h3>
+            <ul class="request-list">
+                <li class="request-item">
+                    New consultation request from Alex Johnson
+                    <button class="accept-btn">Accept</button>
+                    <button class="decline-btn">Reject</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Messages Section -->
+        <div class="dashboard-section">
+            <h3>Messages</h3>
+            <ul class="message-list">
+                <li class="message-item">
+                    <strong>From:</strong> Michael Brown - "Need help with anxiety issues..."
+                    <button class="accept-btn">Reply</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Video Call Section -->
+        <div class="video-container" id="videoCall">
+            <h3>Live Video Session</h3>
+            <video id="localVideo" autoplay playsinline></video>
+            <video id="remoteVideo" autoplay playsinline></video>
+        </div>
+    </div>
+
+    <script>
+        const socket = new WebSocket('ws://' + window.location.host + '/ws/call/');
+
+        socket.onmessage = function(event) {
+            console.log("Message received", event.data);
+        };
+
+        function joinCall() {
+            document.getElementById('videoCall').style.display = 'flex';
+            alert("Joined Call!");
+        }
+
+        function logout() {
+            if (confirm("Are you sure you want to log out?")) {
+                window.location.href = "login.html";
+            }
+        }
+    </script>
 </body>
 </html>
