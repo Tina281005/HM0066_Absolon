@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Tracker:</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #e0f7fa, #f0f8ff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .header {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            border-radius: 12px;
+        }
+
+        /* Content Styling */
+        .content {
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        /* Test Containers */
+        .test-container {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            width: 900px;
+            margin-bottom: 20px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .test-description {
+            font-size: 16px;
+            color: #333;
+            opacity: 0.8;
+        }
+
+        .test-button {
+            background: rgba(0, 123, 255, 0.8);
+            color: white;
+            padding: 12px 20px;
+            width: 90px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .test-button:hover {
+            background: rgba(0, 123, 255, 1);
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .test-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">Mental Health Tracker</div>
+
+    <!-- Content -->
+    <div class="content">
+        <h1>START YOUR PROGRESS TRACKING JOURNEY..</h1>
+        <p class="description">
+            Tracking your mental health is an essential step in understanding your emotions, thoughts, 
+            and overall well-being. By regularly assessing yourself, you can identify patterns, recognize triggers, 
+            and take meaningful steps toward personal growth and stability.
+        </p>
+
+        <!-- Generalized Anxiety Disorder-7 (GAD-7) -->
+        <div class="test-container">
+            <div>
+                <p class="test-title">Generalized Anxiety Disorder-7 (GAD-7) Test</p>
+                <p class="test-description">
+                    The Generalized Anxiety Disorder-7 (GAD-7) is a 7-item self-report questionnaire designed 
+                    to screen and assess the severity of generalized anxiety disorder (GAD). It is widely used 
+                    in clinical and research settings to measure anxiety symptoms over the past two weeks.
+                </p>
+            </div>
+            <a href="{% url 'GAD_7' %}" class="test-button">TAKE TEST</a>
+        </div>
+
+        <!-- PTSD -->
+        <div class="test-container">
+            <div>
+                <p class="test-title">POST TRAUMATIC STRESS DISORDER (PTSD)</p>
+                <p class="test-description">
+                    The PCL-5 is a standardized questionnaire used to assess Post-Traumatic Stress Disorder (PTSD)
+                     symptoms based on the DSM-5 criteria
+                </p>
+            </div>
+            <a href="{% url 'PTSD' %}" class="test-button">TAKE TEST</a>
+        </div>
+    </div>
+
+</body>
+</html>
