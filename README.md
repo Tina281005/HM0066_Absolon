@@ -30,17 +30,15 @@ Our project is a secure and interactive mental health support platform designed 
 - **AI Integration**: Provides personalized insights and predictive analytics for mental health assessments.
 
 ## Screenshots
-
-![intelegent test](https://github.com/user-attachments/assets/2d702abf-cad8-4ca7-934e-71a722893a04)
-
-
-
-
-*Include relevant screenshots of your platform here.*
-
-## Deployed URL
-
-[View the Deployed Solution](https://gfgpccoe.in)
+![login](https://github.com/user-attachments/assets/89c3896a-58fd-4618-8101-e06e13e6873d)
+![signup](https://github.com/user-attachments/assets/b9eb5a5f-4e35-4d83-9c5b-a39178be5fa9)
+![user dashboard](https://github.com/user-attachments/assets/a0325fa9-94e1-4a1e-a42f-849878e556bb)
+![intelegent test](https://github.com/user-attachments/assets/2d6d064e-7c9c-419b-8353-2f9ae3c318e0)
+![personality test](https://github.com/user-attachments/assets/03d99971-e1cf-42e6-b337-5e9b816045e0)
+![test example](https://github.com/user-attachments/assets/e505f97d-2850-4a3f-ab28-933d9a9e39a0)
+![journal](https://github.com/user-attachments/assets/4f72d090-f32a-4922-9e1a-6dc81f3fab4d)
+![therapist dashboard](https://github.com/user-attachments/assets/7d98776e-d05f-4295-9feb-002407682129)
+![therapist list](https://github.com/user-attachments/assets/bb469466-4b63-44cd-96ee-46c5bc32bedd)
 
 ## Video URL
 
