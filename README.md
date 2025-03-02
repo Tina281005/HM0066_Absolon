@@ -29,6 +29,21 @@ Our project is a secure and interactive mental health support platform designed 
 - **Bootstrap**: A framework to make the platform responsive and aesthetically pleasing.  
 - **AI Integration**: Provides personalized insights and predictive analytics for mental health assessments.
 
+  ## 4 Most Important Future Scope Features:
+
+1. **AI-Driven Personalization:**  
+   Use AI for tailored mental health support and adaptive treatment plans, enhancing the platform's ability to meet individual needs.
+
+2. **Real-time Professional Interaction:**  
+   Enable live communication between users and therapists, providing immediate guidance and support when needed.
+
+3. **Wearable Technology Integration:**  
+   Integrate real-time tracking through wearables to proactively monitor and manage users' mental health.
+
+4. **Expansion of Professional Network:**  
+   Broaden the range of mental health specialists available on the platform to cater to diverse user needs and therapeutic approaches.
+
+
 ## Screenshots
 ![login](https://github.com/user-attachments/assets/89c3896a-58fd-4618-8101-e06e13e6873d)
 ![signup](https://github.com/user-attachments/assets/b9eb5a5f-4e35-4d83-9c5b-a39178be5fa9)
@@ -42,7 +57,7 @@ Our project is a secure and interactive mental health support platform designed 
 
 ## Video URL
 
-[Watch the Demo Video](video_url)
+[[Watch the Demo Video](video_url)](https://youtu.be/O97N8-FItH8?feature=shared)
 
 ## Remarks
 
