@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAD-7 Anxiety Assessment</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    
+        /* Main Container */
+        .container {
+            max-width: 600px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            transition: 0.3s ease-in-out;
+        }
+    
+        .container:hover {
+            transform: scale(1.02);
+        }
+    
+        /* Heading */
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 28px;
+            font-weight: bold;
+        }
+    
+        /* Form Labels */
+        label {
+            font-size: 17px;
+            display: block;
+            margin: 12px 0 6px;
+            color: #333;
+            font-weight: 500;
+        }
+    
+        /* Options Styling */
+        .options {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: background 0.3s;
+        }
+    
+        .options:hover {
+            background: #eef1f5;
+        }
+    
+        .options input {
+            margin-right: 8px;
+            cursor: pointer;
+        }
+    
+        /* Button Styling */
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #27ae60, #219150);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s ease-in-out;
+        }
+    
+        button:hover {
+            background: linear-gradient(135deg, #219150, #1a7a40);
+            transform: scale(1.05);
+        }
+    
+        /* Table Styling */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+    
+        th {
+            background: #2980b9;
+            color: white;
+            font-size: 18px;
+        }
+    
+        td {
+            background: #f9f9f9;
+            color: #333;
+            font-size: 16px;
+        }
+    
+        tr:nth-child(even) td {
+            background: #f2f2f2;
+        }
+    
+        /* PTSD Level Display */
+        #progress {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 8px;
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 650px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+    
+            label {
+                font-size: 16px;
+            }
+    
+            button {
+                font-size: 16px;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+
+<div class="container">
+    <h1>GAD-7 Anxiety Assessment</h1>
+    <form id="gadForm">
+        <label>1. Feeling nervous, anxious, or on edge?</label>
+        <div class="options">
+            <input type="radio" name="q1" value="0"> 0 - Not at all
+            <input type="radio" name="q1" value="1"> 1 - Several days
+            <input type="radio" name="q1" value="2"> 2 - More than half the days
+            <input type="radio" name="q1" value="3"> 3 - Nearly every day
+        </div>
+
+        <label>2. Not being able to stop or control worrying?</label>
+        <div class="options">
+            <input type="radio" name="q2" value="0"> 0 - Not at all
+            <input type="radio" name="q2" value="1"> 1 - Several days
+            <input type="radio" name="q2" value="2"> 2 - More than half the days
+            <input type="radio" name="q2" value="3"> 3 - Nearly every day
+        </div>
+
+        <label>3. Worrying too much about different things?</label>
+        <div class="options">
+            <input type="radio" name="q3" value="0"> 0 - Not at all
+            <input type="radio" name="q3" value="1"> 1 - Several days
+            <input type="radio" name="q3" value="2"> 2 - More than half the days
+            <input type="radio" name="q3" value="3"> 3 - Nearly every day
+        </div>
+
+        <label>4. Trouble relaxing?</label>
+        <div class="options">
+            <input type="radio" name="q4" value="0"> 0 - Not at all
+            <input type="radio" name="q4" value="1"> 1 - Several days
+            <input type="radio" name="q4" value="2"> 2 - More than half the days
+            <input type="radio" name="q4" value="3"> 3 - Nearly every day
+        </div>
+
+        <label>5. Being so restless that it is hard to sit still?</label>
+        <div class="options">
+            <input type="radio" name="q5" value="0"> 0 - Not at all
+            <input type="radio" name="q5" value="1"> 1 - Several days
+            <input type="radio" name="q5" value="2"> 2 - More than half the days
+            <input type="radio" name="q5" value="3"> 3 - Nearly every day
+        </div>
+
+        <label>6. Becoming easily annoyed or irritable?</label>
+        <div class="options">
+            <input type="radio" name="q6" value="0"> 0 - Not at all
+            <input type="radio" name="q6" value="1"> 1 - Several days
+            <input type="radio" name="q6" value="2"> 2 - More than half the days
+            <input type="radio" name="q6" value="3"> 3 - Nearly every day
+        </div>
+
+        <label>7. Feeling afraid, as if something awful might happen?</label>
+        <div class="options">
+            <input type="radio" name="q7" value="0"> 0 - Not at all
+            <input type="radio" name="q7" value="1"> 1 - Several days
+            <input type="radio" name="q7" value="2"> 2 - More than half the days
+            <input type="radio" name="q7" value="3"> 3 - Nearly every day
+        </div>
+
+        <button type="button" onclick="calculateScore()">Submit</button>
+    </form>
+
+    <h2>Responses Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Response</th>
+            </tr>
+        </thead>
+        <tbody id="responseTable">
+        </tbody>
+    </table>
+
+    <div id="progress"></div>
+</div>
+
+<script>
+    function calculateScore() {
+    let totalScore = 0;
+    let tableBody = document.getElementById("responseTable");
+    tableBody.innerHTML = ""; // Clear previous data
+
+    for (let i = 1; i <= 7; i++) {
+        let radios = document.getElementsByName("q" + i);
+        let selectedValue = "Not Answered"; // Default if no selection
+
+        for (let radio of radios) {
+            if (radio.checked) {
+                selectedValue = radio.value;
+                totalScore += parseInt(selectedValue);
+                break;
+            }
+        }
+
+        // Append row to the table
+        let row = document.createElement("tr");
+        row.innerHTML = `<td>Q${i}</td><td>${selectedValue}</td>`;
+        tableBody.appendChild(row);
+    }
+
+    // Show progress message
+    let progressMessage = "Your Anxiety Level: ";
+    if (totalScore <= 4) {
+        progressMessage += "Minimal Anxiety (0-4)";
+    } else if (totalScore <= 9) {
+        progressMessage += "Mild Anxiety (5-9)";
+    } else if (totalScore <= 14) {
+        progressMessage += "Moderate Anxiety (10-14)";
+    } else {
+        progressMessage += "Severe Anxiety (15-21)";
+    }
+
+    document.getElementById("progress").innerText = progressMessage;
+}
+
+</script>
+
+</body>
+</html>

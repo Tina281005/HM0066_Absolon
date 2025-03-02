@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Tracker - Intelligence Test</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #e0f7fa, #f0f8ff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .header {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            border-radius: 12px;
+        }
+
+        /* Content Styling */
+        .content {
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        /* Test Containers */
+        .test-container {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .test-description {
+            font-size: 16px;
+            color: #333;
+            opacity: 0.8;
+        }
+
+        .test-button {
+            background: rgba(0, 123, 255, 0.8);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .test-button:hover {
+            background: rgba(0, 123, 255, 1);
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .test-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">Mental Health Tracker</div>
+
+    <!-- Content -->
+    <div class="content">
+        <h1>INTELLIGENCE TEST</h1>
+        <p class="description">
+            Intelligence tests help assess your cognitive abilities and strengths in different areas.
+            By taking these tests, you can gain insights into your problem-solving skills, 
+            logical reasoning, language abilities, and more. Choose a test below to begin!
+        </p>
+
+        <!-- Logical-Mathematical Test -->
+        <div class="test-container">
+            <div>
+                <p class="test-title">Logical-Mathematical Test</p>
+                <p class="test-description">
+                    Evaluate your logical reasoning and numerical problem-solving skills.
+                </p>
+            </div>
+            <a href="{% url 'logical_math_test' %}" class="test-button">TAKE TEST</a>
+        </div>
+
+        <!-- Linguistic Test -->
+        <div class="test-container">
+            <div>
+                <p class="test-title">Linguistic Test</p>
+                <p class="test-description">
+                    Measure your language skills, vocabulary, grammar, and verbal reasoning.
+                </p>
+            </div>
+            <a href="{% url 'linguistic_test' %}" class="test-button">TAKE TEST</a>
+        </div>
+
+         <!-- Spatial Test -->
+        <div class="test-container">
+            <div>
+                <p class="test-title">Spatial Test</p>
+                <p class="test-description">
+                    Examine your ability to visualize and manipulate objects in space.
+                </p>
+            </div>
+            <a href="{% url 'spatial_test' %}" class="test-button">TAKE TEST</a>
+        </div>
+
+        <!-- Musical Test -->
+        <div class="test-container">
+            <div>
+                <p class="test-title">Musical Test</p>
+                <p class="test-description">
+                    Analyze your ability to recognize and interpret musical tones, rhythms, and patterns.
+                </p>
+            </div>
+            <a href="{% url 'musical_test' %}" class="test-button">TAKE TEST</a>
+        </div>
+    </div>
+
+</body>
+</html>

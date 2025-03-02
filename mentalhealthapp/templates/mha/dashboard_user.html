@@ -73,6 +73,50 @@
             border-radius: 10px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
+            transition: 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            font-size: 1.6rem;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #333;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .progress-tracker {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            height: 150px;
+            background-color: rgba(0, 123, 255, 1);
+            z-index: 1000;
+            width: 220px;
+        }
+
+        /* Responsive Grid */
+        @media (max-width: 600px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -102,7 +146,28 @@
                 <p>Write your thoughts and reflections.</p>
             </div>
         </div>
+
+        <!-- INTELLIGENCE TEST -->
+        <div class="card">
+            <h2><a href="{% url 'intelligence_test' %}" class="btn">INTELLIGENCE TEST</a></h2>
+            <p>Track your daily feelings and observe patterns.</p>
+        </div>
+
+        <!-- PERSONALITY TEST -->
+        <div class="card">
+            <h2><a href="{% url 'personality_test' %}" class="btn">PERSONALITY TEST</a></h2>
+            <p>Track your daily feelings and observe patterns.</p>
+        </div>
     </div>
 
+    <!-- Progress Tracker -->
+    <div class="card progress-tracker">
+        <h2><a href="{% url 'track' %}" class="btn">Start Your Progress Tracker</a></h2>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Mental Wellness App</p>
+    </footer>
 </body>
 </html>

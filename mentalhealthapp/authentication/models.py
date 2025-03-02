@@ -16,7 +16,6 @@ class UserCreds(models.Model):
     def __str__(self):
         return f"{self.first_name} ({self.role})"
 
-
 class Therapist(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     specialty = models.CharField(max_length=100)
@@ -39,5 +38,40 @@ class ChatMessage(models.Model):
 class CallRequest(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="caller")
     therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE, related_name="callee")
-    status = models.CharField(max_length=10, choices=[("pending", "Pending"), ("accepted", "Accepted"), ("rejected", "Rejected")], default="pending")
+    status = models.CharField(
+        max_length=10, 
+        choices=[("pending", "Pending"), ("accepted", "Accepted"), ("rejected", "Rejected")], 
+        default="pending"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
+
+class GAD7Response(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="gad7_responses")
+    q1 = models.IntegerField()
+    q2 = models.IntegerField()
+    q3 = models.IntegerField()
+    q4 = models.IntegerField()
+    q5 = models.IntegerField()
+    q6 = models.IntegerField()
+    q7 = models.IntegerField()
+    total_score = models.IntegerField(editable=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        """Automatically calculate total score before saving"""
+        self.total_score = self.q1 + self.q2 + self.q3 + self.q4 + self.q5 + self.q6 + self.q7
+        super().save(*args, **kwargs)
+
+    def get_severity(self):
+        """Returns severity level based on score"""
+        if self.total_score <= 4:
+            return "Minimal Anxiety"
+        elif self.total_score <= 9:
+            return "Mild Anxiety"
+        elif self.total_score <= 14:
+            return "Moderate Anxiety"
+        else:
+            return "Severe Anxiety"
+
+    def __str__(self):
+        return f"GAD-7 Score: {self.total_score} (User: {self.user.first_name})"

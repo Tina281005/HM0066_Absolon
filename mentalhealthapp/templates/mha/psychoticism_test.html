@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psychoticism Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .question {
+            text-align: left;
+            margin: 15px 0;
+            font-size: 18px;
+            color: #444;
+            padding: 10px;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .options {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 5px;
+        }
+        input[type="radio"] {
+            margin-left: 10px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 15px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        canvas {
+            margin-top: 20px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Psychoticism Test</h1>
+        <form id="testForm">
+            <div class="question">1. Do you enjoy breaking rules or challenging authority?
+                <div class="options">
+                    <label><input type="radio" name="q1" value="1"> Yes</label>
+                    <label><input type="radio" name="q1" value="0"> No</label>
+                </div>
+            </div>
+            <div class="question">2. Do you often act without thinking of consequences?
+                <div class="options">
+                    <label><input type="radio" name="q2" value="1"> Yes</label>
+                    <label><input type="radio" name="q2" value="0"> No</label>
+                </div>
+            </div>
+            <div class="question">3. Do you find it difficult to empathize with others?
+                <div class="options">
+                    <label><input type="radio" name="q3" value="1"> Yes</label>
+                    <label><input type="radio" name="q3" value="0"> No</label>
+                </div>
+            </div>
+            <div class="question">4. Do you sometimes manipulate people to get what you want?
+                <div class="options">
+                    <label><input type="radio" name="q4" value="1"> Yes</label>
+                    <label><input type="radio" name="q4" value="0"> No</label>
+                </div>
+            </div>
+            <div class="question">5. Do you enjoy seeing others struggle or fail?
+                <div class="options">
+                    <label><input type="radio" name="q5" value="1"> Yes</label>
+                    <label><input type="radio" name="q5" value="0"> No</label>
+                </div>
+            </div>
+            <button type="button" onclick="evaluateTest()">Evaluate</button>
+        </form>
+        <div class="result" id="resultText"></div>
+        <canvas id="resultChart"></canvas>
+    </div>
+
+    <script>
+        function evaluateTest() {
+            let score = 0;
+            for (let i = 1; i <= 5; i++) {
+                let answer = document.querySelector(`input[name='q${i}']:checked`);
+                if (answer) {
+                    score += parseInt(answer.value);
+                }
+            }
+            displayResult(score);
+            drawChart(score);
+        }
+
+        function displayResult(score) {
+            let resultText = document.getElementById("resultText");
+            if (score === 0) {
+                resultText.innerHTML = "🟢 Low Psychoticism: You are kind, empathetic, and considerate.";
+                resultText.style.color = "green";
+            } else if (score <= 2) {
+                resultText.innerHTML = "🟠 Moderate Psychoticism: You may take risks but still show empathy.";
+                resultText.style.color = "orange";
+            } else {
+                resultText.innerHTML = "🔴 High Psychoticism: You may show aggression, impulsivity, or manipulation.";
+                resultText.style.color = "red";
+            }
+        }
+
+        function drawChart(score) {
+            var ctx = document.getElementById("resultChart").getContext("2d");
+            new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: ["Low Psychoticism", "Moderate Psychoticism", "High Psychoticism"],
+                    datasets: [{
+                        label: "Psychoticism Score",
+                        data: [score === 0 ? score : 0, (score > 0 && score <= 2) ? score : 0, score > 2 ? score : 0],
+                        backgroundColor: ["green", "orange", "red"]
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true, max: 5 }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
