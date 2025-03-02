@@ -31,8 +31,10 @@ Our project is a secure and interactive mental health support platform designed 
 
 ## Screenshots
 
-![Platform Screenshot 1](url_to_image_1)  
-![Platform Screenshot 2](url_to_image_2)
+![intelegent test](https://github.com/user-attachments/assets/2d702abf-cad8-4ca7-934e-71a722893a04)
+
+
+
 
 *Include relevant screenshots of your platform here.*
 
