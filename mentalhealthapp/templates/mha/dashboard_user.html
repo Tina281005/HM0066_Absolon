@@ -105,6 +105,15 @@
             color: #666;
             font-size: 14px;
         }
+        .progress-tracker {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        height: 150px;
+        background-color: rgba(0, 123, 255, 1);;
+        z-index: 1000;
+        width: 220px; /* Adjust width if needed */
+    }
 
         /* Responsive Grid */
         @media (max-width: 600px) {
@@ -147,12 +156,31 @@
             <h2>Upcoming Sessions</h2>
             <p>Stay updated with your appointments.</p>
         </div>
+
+        <!-- INTELLIGENCE TEST -->
+     <div class="card">
+        <h2><a href="{% url 'intelligence_test' %}" class="btn">INTELLIGENCE TEST</a></h2>
+        <p>Track your daily feelings and observe patterns.</p>
     </div>
-    
+
+    <!-- PERSONALITY TEST -->
+    <div class="card">
+        <h2><a href="{% url 'personality_test' %}" class="btn">PERSONALITY TEST</a></h2>
+        <p>Track your daily feelings and observe patterns.</p>
+    </div>
+</div>
+
+  <!-- Progress Tracker -->
+<div class="card progress-tracker">
+    <h2><a href="{% url 'track' %}" class="btn">Start Your Progress Tracker</a></h2>
+</div>
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Mental Wellness App</p>
     </footer>
+
+     
     
 </body>
 </html>

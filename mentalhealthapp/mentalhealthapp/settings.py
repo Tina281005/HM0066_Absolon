@@ -78,7 +78,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mental_health_db',
         'USER': 'root',
-        'PASSWORD': 'Misterknowwants2eat',
+        'PASSWORD': 'Zombie@7578',
         'HOST': 'localhost',
         'PORT': '3306',
     }

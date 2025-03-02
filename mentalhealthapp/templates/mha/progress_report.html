@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAD-7 Progress Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #555;
+        }
+        .back-btn {
+            display: block;
+            width: 200px;
+            text-align: center;
+            padding: 10px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .back-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Your GAD-7 Progress Report</h2>
+
+    {% if responses %}
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Total Score</th>
+                <th>Severity Level</th>
+            </tr>
+            {% for response in responses %}
+            <tr>
+                <td>{{ response.timestamp|date:"M d, Y H:i" }}</td>
+                <td>{{ response.total_score }}</td>
+                <td>
+                    {% if response.total_score >= 15 %}
+                        <span style="color: red;">Severe Anxiety</span>
+                    {% elif response.total_score >= 10 %}
+                        <span style="color: orange;">Moderate Anxiety</span>
+                    {% elif response.total_score >= 5 %}
+                        <span style="color: yellow;">Mild Anxiety</span>
+                    {% else %}
+                        <span style="color: green;">Minimal Anxiety</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="message">
+            {% if responses|length > 1 %}
+                {% with latest_score=responses.0.total_score previous_score=responses.1.total_score %}
+                    {% if latest_score > previous_score %}
+                        Your anxiety has increased by {{ latest_score|add:-previous_score }} points. Consider seeking support.
+                    {% elif latest_score < previous_score %}
+                        Your anxiety has decreased by {{ previous_score|add:-latest_score }} points. Keep up the good work!
+                    {% else %}
+                        No change in your anxiety levels. Continue tracking your progress.
+                    {% endif %}
+                {% endwith %}
+            {% else %}
+                This is your first test. Track your progress over time.
+            {% endif %}
+        </div>
+
+    {% else %}
+        <p class="message">No records found. Take your first GAD-7 test to track your progress.</p>
+    {% endif %}
+
+    <a href="{% url 'gad7_form' %}" class="back-btn">Take GAD-7 Test</a>
+
+</body>
+</html>

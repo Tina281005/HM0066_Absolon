@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Tracker - Intelligence Test</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #e0f7fa, #f0f8ff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .header {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            border-radius: 12px;
+        }
+
+        /* Content Styling */
+        .content {
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        /* Test Containers */
+        .test-container {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .test-description {
+            font-size: 16px;
+            color: #333;
+            opacity: 0.8;
+        }
+
+        .test-button {
+            background: rgba(0, 123, 255, 0.8);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .test-button:hover {
+            background: rgba(0, 123, 255, 1);
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .test-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">Mental Health Tracker</div>
+
+    <!-- Content -->
+    <div class="content">
+        <h1>PERSONALITY TEST</h1>
+        <p class="description">
+            "Personality tests provide valuable insights into your cognitive strengths, problem-solving abilities, 
+            and unique traits. These tests help you understand how you think, reason, and interact with the world. 
+            Select a test below to explore your personality!"
+        </p>
+
+        <!--Extraversion Test -->
+        <div class="test-container">
+            <div>
+                <p class="test-title">Extraversion Test</p>
+                <p class="test-description">
+                    Evaluate your sociability & energy.
+                </p>
+            </div>
+            <a href="{% url 'extraversion_test' %}" class="test-button">TAKE TEST</a>
+        </div>
+
+        <!--Neuroticism Test -->
+        <div class="test-container">
+            <div>
+                <p class="test-title">Neuroticism Test</p>
+                <p class="test-description">
+                    Evaluate your emotional stability.
+                </p>
+            </div>
+            <a href="{% url 'neuroticism_test' %}" class="test-button">TAKE TEST</a>
+        </div>
+
+        <!--Psychoticism Test -->
+        <div class="test-container">
+            <div>
+                <p class="test-title">Psychoticism Test</p>
+                <p class="test-description">
+                    Measures impulsiveness & detachment.
+                </p>
+            </div>
+            <a href="{% url 'psychoticism_test' %}" class="test-button">TAKE TEST</a>
+        </div>
+
+        
+    </div>
+
+</body>
+</html>
