@@ -106,11 +106,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# FIREBASE SETUP (Ensure File Exists)
-FIREBASE_CREDENTIALS_PATH = os.path.join(BASE_DIR, "firebase-adminsdk.json")
-
-if os.path.exists(FIREBASE_CREDENTIALS_PATH):
-    cred = credentials.Certificate(FIREBASE_CREDENTIALS_PATH)
-    firebase_admin.initialize_app(cred)
-else:
-    raise ImproperlyConfigured("Firebase credentials file missing. Add 'firebase-adminsdk.json' in project root.")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')

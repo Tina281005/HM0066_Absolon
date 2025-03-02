@@ -6,6 +6,24 @@ from django.http import JsonResponse
 import json
 from .models import UserCreds, Therapist, ChatRoom, CallRequest, ChatMessage, GAD7Response
 from .forms import UserSignupForm, TherapistSignupForm
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from .models import MoodEntry
+from django.db.models import Count
+from django.shortcuts import render, redirect
+from django.contrib.auth.hashers import make_password, check_password
+from .models import UserCreds
+from .forms import UserSignupForm, TherapistSignupForm
+from .forms import JournalEntryForm
+from django.contrib.auth.decorators import login_required
+from .models import JournalEntry
+from django.db import connection
+from django.core.files.storage import default_storage
+from django.db import transaction
+from django.utils import timezone
+from django.contrib import messages
+from django.utils.timezone import localtime
 
 # User Signup View
 def user_signup(request):
@@ -154,7 +172,7 @@ def linguistic_test(request):
     return render(request, "mha/linguistic_test.html")
 
 # GAD-7 Test
-@login_required
+
 def GAD_7(request):
     if request.method == "POST":
         user = request.user
@@ -175,3 +193,123 @@ def GAD_7(request):
 # PTSD Test
 def PTSD(request):
     return render(request, 'mha/PTSD.html')
+
+
+def spatial_test(request):
+     if request.method == "POST":
+        data = json.loads(request.body)
+        score = sum(data["responses"])
+        percentage = (score / 25) * 100  # Max score is 25
+
+        recommendation = "High spatial intelligence! You excel in visualizing and working with spatial information." if percentage > 70 else "You have moderate spatial intelligence."
+
+        return JsonResponse({"percentage": percentage, "recommendation": recommendation})
+     return render(request, "mha/spatial_test.html")
+
+def musical_test(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        score = sum(data["responses"])
+        percentage = (score / 25) * 100  # Max score is 25
+
+        recommendation = "You have strong musical intelligence! Music plays an important role in your learning and creativity." if percentage > 70 else "You have moderate musical intelligence."
+
+        return JsonResponse({"percentage": percentage, "recommendation": recommendation})
+    return render(request, "mha/musical_test.html")
+
+def extraversion_test(request):
+   if request.method == "POST":
+        data = json.loads(request.body)  # Assuming you're using AJAX to send data
+        score = sum(data.get("answers", []))  # Sum of Yes (1) answers
+
+        return render(request, "extraversion_result.html", {"score": score})
+   return render(request, "mha/extraversion_test.html")
+
+def neuroticism_test(request):
+    return render(request, 'mha/neuroticism_test.html')
+
+def psychoticism_test(request):
+    return render(request, 'mha/psychoticism_test.html')
+
+def track(request):
+    return render(request, 'mha/track.html')
+
+
+
+
+
+@login_required
+def mood_tracker(request):
+    if request.method == "POST":
+        mood = request.POST.get('mood')
+        comment = request.POST.get('comment')
+
+        MoodEntry.objects.create(user=request.user, mood=mood, comment=comment)
+
+        return JsonResponse({'message': 'Mood recorded successfully!'})
+
+    return render(request, 'mood_tracker.html')
+
+@login_required
+def mood_history(request):
+    moods = MoodEntry.objects.filter(user=request.user).order_by('-date')
+    return JsonResponse(list(moods.values('date', 'mood', 'comment')), safe=False)
+
+@login_required
+def mood_data(request):
+    moods = MoodEntry.objects.filter(user=request.user).values('mood').annotate(count=Count('mood'))
+    mood_dict = {mood['mood']: mood['count'] for mood in moods}
+    return JsonResponse(mood_dict)
+
+
+def journal(request):
+    user_id = request.session.get('user_id')
+
+    if not user_id:
+        return redirect('login')
+
+    try:
+        user = UserCreds.objects.get(id=user_id)
+    except UserCreds.DoesNotExist:
+        return redirect('login')
+
+    if request.method == 'POST':
+        form = JournalEntryForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                with transaction.atomic():
+                    journal_entry = form.save(commit=False)
+                    journal_entry.user = user
+                    journal_entry.created_at = localtime(timezone.now())  # Use localtime for IST
+                    journal_entry.save()
+                    messages.success(request, 'Journal entry saved successfully!')
+            except Exception as e:
+                messages.error(request, 'Error saving journal entry. Please try again.')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+        return redirect('journal')
+    else:
+        form = JournalEntryForm()
+
+    journal_entries = JournalEntry.objects.filter(user=user).order_by("-created_at")
+    
+    return render(request, "mha/journal.html", {
+        "journal_entries": journal_entries,
+        "form": form,
+        "user": user
+    })
+
+def delete_journal_entry(request, entry_id):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
+    
+    try:
+        # Get the entry and verify it belongs to the current user
+        entry = JournalEntry.objects.get(id=entry_id, user_id=user_id)
+        entry.delete()
+        messages.success(request, 'Journal entry deleted successfully!')
+    except JournalEntry.DoesNotExist:
+        messages.error(request, 'Journal entry not found or you do not have permission to delete it.')
+    
+    return redirect('journal')

@@ -3,97 +3,344 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journal</title>
+    <title>Your Journal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-blue: #4A90E2;
+            --soft-pink: #FFB6C1;
+            --soft-yellow: #FFE5B4;
+            --text-dark: #333;
+            --text-light: #666;
+        }
+
         body {
-            background-color: #f4f4f9;
+            background: linear-gradient(135deg, #f6f9ff 0%, #fff9f9 100%);
             font-family: 'Poppins', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
         }
-        nav {
-            width: 100%;
-            background: linear-gradient(90deg, #007bff, #00c6ff);
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 10px;
-            color: white;
-            font-weight: bold;
-            font-size: 20px;
+
+        .mascot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 120px;
+            height: 120px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="rosy" cx="0.5" cy="0.5" r="0.5"><stop offset="0%" stop-color="%23ff9eb5" stop-opacity="0.6"/><stop offset="100%" stop-color="%23ff9eb5" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="45" fill="%23FFB6C1"/><circle cx="35" cy="40" r="8" fill="white"/><circle cx="65" cy="40" r="8" fill="white"/><circle cx="35" cy="40" r="4" fill="%234A90E2"/><circle cx="65" cy="40" r="4" fill="%234A90E2"/><circle cx="33" cy="38" r="2" fill="white"/><circle cx="63" cy="38" r="2" fill="white"/><circle cx="30" cy="45" r="7" fill="%23ff9eb5" opacity="0.6"/><circle cx="70" cy="45" r="7" fill="%23ff9eb5" opacity="0.6"/><path d="M 35 65 Q 50 75 65 65" stroke="%23444" fill="none" stroke-width="3" stroke-linecap="round"/><path d="M 25 25 Q 50 35 75 25" stroke="%23FFE5B4" fill="none" stroke-width="4" stroke-linecap="round"/></svg>') no-repeat center;
+            animation: bounce 2s infinite;
+            z-index: 1000;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.2));
+            transform-origin: bottom center;
         }
-        .container {
-            width: 90%;
-            max-width: 800px;
+
+        .greeting-bubble {
+            position: fixed;
+            bottom: 150px;
+            right: 50px;
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+            padding: 15px 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: 16px;
+            color: var(--text-dark);
+            z-index: 1000;
+            animation: bobbing 3s ease-in-out infinite;
+            border: 2px solid var(--soft-pink);
         }
+
+        .greeting-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 40px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-right: 2px solid var(--soft-pink);
+            border-bottom: 2px solid var(--soft-pink);
+            transform: rotate(45deg) translateX(-50%);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        @keyframes bobbing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary-blue), var(--soft-pink));
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .journal-form {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+        }
+
+        .journal-form:hover {
+            transform: translateY(-5px);
+        }
+
         textarea {
             width: 100%;
-            height: 200px;
+            min-height: 200px;
             padding: 15px;
-            border: 2px solid #007bff;
-            border-radius: 8px;
+            border: 2px solid var(--soft-pink);
+            border-radius: 15px;
             font-size: 16px;
-            resize: none;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
             outline: none;
+            border-color: var(--primary-blue);
         }
-        .file-upload {
-            margin-top: 15px;
+
+        .entry {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border-left: 5px solid var(--primary-blue);
         }
-        .buttons {
-            margin-top: 20px;
+
+        .entry:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .entry-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--soft-yellow);
         }
-        button {
-            background-color: #007bff;
+
+        .entry-date {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        .entry-content {
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .entry-image {
+            max-width: 100%;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+
+        .button {
+            background: var(--primary-blue);
             color: white;
-            padding: 12px 20px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 8px;
-            cursor: pointer;
+            border-radius: 25px;
             font-size: 16px;
-            transition: 0.3s;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
         }
-        button:hover {
-            background-color: #0056b3;
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
         }
-        footer {
-            margin-top: 30px;
+
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .delete-btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background-color: #f3f8fc;
+            color: #721c24;
+            border: 1px solid #4A90E2;
+        }
+
+        .no-entries {
             text-align: center;
-            color: gray;
+            color: var(--text-light);
+            font-style: italic;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        /* Custom file input styling */
+        .file-upload {
+            margin: 15px 0;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload label {
+            background: var(--soft-pink);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .file-upload label:hover {
+            background: #ff9eb5;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
-    <nav>
-        <span>Journal</span>
-        <a href="dashboard.html" style="text-decoration: none; color: white; background: rgba(255, 255, 255, 0.3); padding: 10px 20px; border-radius: 5px;">Back to Dashboard</a>
-    </nav>
+    <div class="mascot"></div>
+    <div class="greeting-bubble">Hi {{ user.first_name }}! Ready to write? 📝✨</div>
     
     <div class="container">
-        <h2 style="text-align: center; color: #007bff;">Your Daily Journal</h2>
-        <textarea placeholder="Write about your day..."></textarea>
-        <div class="file-upload">
-            <label for="file">Attach images:</label>
-            <input type="file" id="file" multiple>
+        <div class="welcome-banner">
+            <h1>✨ Your Daily Journal ✨</h1>
+            <p>Express yourself freely and let your thoughts flow...</p>
         </div>
-        <div class="buttons">
-            <button>Save Entry</button>
-            <button style="background-color: #28a745;">Share with Therapist</button>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="journal-form">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.entry_text.label_tag }}
+                {{ form.entry_text }}
+                
+                <div class="file-upload">
+                    <label for="{{ form.image.id_for_label }}">
+                        📎 Add an Image
+                    </label>
+                    {{ form.image }}
+                </div>
+
+                <button type="submit" class="button">✨ Save Entry</button>
+            </form>
+        </div>
+
+        <div class="journal-entries">
+            <h2 style="color: var(--primary-blue); margin-bottom: 30px; text-align: center;">Your Journey So Far ✨</h2>
+            
+            {% if journal_entries %}
+                {% for entry in journal_entries %}
+                    <div class="entry">
+                        <div class="entry-header">
+                            <span class="entry-date">{{ entry.created_at|date:"F j, Y" }} at {{ entry.created_at|time:"g:i A" }} IST</span>
+                            {% if entry.id %}
+    <a href="{% url 'delete_journal_entry' entry_id=entry.id %}">Delete</a>
+{% else %}
+    <span>No ID available</span>
+{% endif %}
+                        </div>
+                        <div class="entry-content">
+                            {{ entry.entry_text|linebreaks }}
+                            {% if entry.image %}
+                                <img src="{{ entry.image.url }}" alt="Journal entry image" class="entry-image">
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-entries">
+                    <h3>📝 Start Your Journey</h3>
+                    <p>Your first journal entry awaits! Share your thoughts, feelings, and experiences above.</p>
+                </div>
+            {% endif %}
         </div>
     </div>
-    
-    <footer>
-        <p>&copy; 2025 Mental Wellness App</p>
-    </footer>
+
+    <script>
+        function confirmDelete(deleteUrl) {
+            if (confirm('Are you sure you want to delete this memory? This action cannot be undone.')) {
+                window.location.href = deleteUrl;
+            }
+        }
+
+        // Add animation to entries when they come into view
+        const entries = document.querySelectorAll('.entry');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0)';
+                }
+            });
+        });
+
+        entries.forEach(entry => {
+            entry.style.opacity = '0';
+            entry.style.transform = 'translateX(-20px)';
+            entry.style.transition = 'all 0.5s ease-out';
+            observer.observe(entry);
+        });
+    </script>
 </body>
 </html>

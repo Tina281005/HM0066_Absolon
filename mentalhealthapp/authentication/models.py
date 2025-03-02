@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class UserCreds(models.Model):
     ROLE_CHOICES = (
         ('user', 'User'),
@@ -46,7 +47,7 @@ class CallRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class GAD7Response(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="gad7_responses")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="gad7_responses",default= None)
     q1 = models.IntegerField()
     q2 = models.IntegerField()
     q3 = models.IntegerField()
@@ -75,3 +76,28 @@ class GAD7Response(models.Model):
 
     def __str__(self):
         return f"GAD-7 Score: {self.total_score} (User: {self.user.first_name})"
+    
+class MoodEntry(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mood = models.CharField(max_length=20, choices=[
+        ('happy', 'Happy'), ('neutral', 'Neutral'), ('sad', 'Sad'),
+        ('anxious', 'Anxious'), ('excited', 'Excited'), ('tired', 'Tired')
+    ])
+    comment = models.TextField(blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.mood} - {self.date.strftime('%Y-%m-%d')}"
+    
+
+
+class JournalEntry(models.Model):
+    user = models.ForeignKey(UserCreds, on_delete=models.CASCADE)  # Directly reference UserCreds model
+    entry_text = models.TextField()
+    image = models.ImageField(upload_to='journal_images/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def _str_(self):
+         return f"Journal Entry by {self.user.first_name} on {self.created_at}"
+    
+    

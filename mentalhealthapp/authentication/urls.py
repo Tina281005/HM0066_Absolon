@@ -36,6 +36,14 @@ urlpatterns = [
     path('GAD_7/', views.GAD_7, name='GAD_7'),
     path('PTSD/', views.PTSD, name='PTSD'),
 
+    path('mood-tracker/', views.mood_tracker, name='mood_tracker'),
+    path('mood-history/', views.mood_history, name='mood_history'),
+    path('mood-data/', views.mood_data, name='mood_data'),
+
+    path('journal/', views.journal, name='journal'),  # Add journal URL
+    path('journal/delete/<int:entry_id>/', views.delete_journal_entry, name='delete_journal_entry'),
+    path('delete/<int:entry_id>/', views.delete_journal_entry, name='delete_journal_entry')
+
 ]
 
 

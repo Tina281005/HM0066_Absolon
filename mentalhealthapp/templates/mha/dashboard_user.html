@@ -15,21 +15,22 @@
         body {
             display: flex;
             height: 100vh;
-            background: #f4f6f9;
+            background: #f3f8fc;
         }
 
         .sidebar {
             width: 250px;
-            background: #007bff;
+            background: #4A90E2;
             color: white;
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 20px;
+            border-right: 2px solid #fff;
         }
 
         .sidebar h2 {
-            font-size: 22px;
+            font-size: 24px;
             text-align: center;
             margin-bottom: 20px;
         }
@@ -37,84 +38,103 @@
         .sidebar a, .logout-btn, .therapist-btn {
             color: #ffffff;
             text-decoration: none;
-            padding: 10px;
+            padding: 12px;
             display: block;
-            border-radius: 5px;
-            transition: background 0.3s;
+            border-radius: 8px;
+            transition: background 0.3s, transform 0.2s ease-in-out;
             cursor: pointer;
             text-align: left;
         }
 
         .sidebar a:hover, .logout-btn:hover, .therapist-btn:hover {
             background: rgba(255, 255, 255, 0.2);
+            transform: translateX(10px);
         }
 
         .logout-btn {
-            background: #dc3545;
+            background: #d9534f;
             text-align: center;
             font-weight: bold;
             border: none;
+            margin-top: 20px;
         }
 
         .content {
             flex: 1;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            width: 100%;
         }
 
         .dashboard-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 80%;
+            max-width: 900px;
         }
 
         .card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
             transition: 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
-        .card h2 {
-            font-size: 1.6rem;
-            color: #007bff;
-            margin-bottom: 10px;
+        .card h3, .card h2 {
+            font-size: 1.8rem;
+            color: #4A90E2;
+            margin-bottom: 15px;
         }
 
         .card p {
             font-size: 1rem;
             color: #333;
             opacity: 0.8;
+            margin-bottom: 15px;
         }
 
-        /* Footer */
-        footer {
-            margin-top: 40px;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
+        .btn {
+            background: linear-gradient(45deg, #4A90E2, #0078D4);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s, transform 0.2s ease-in-out;
+            font-size: 1rem;
         }
 
+        .btn:hover {
+            background: #0078D4;
+            transform: translateY(-5px);
+        }
+
+        /* Progress Tracker */
         .progress-tracker {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            height: 150px;
-            background-color: rgba(0, 123, 255, 1);
-            z-index: 1000;
-            width: 220px;
+            margin-top: 40px;
+            width: 80%;
+            max-width: 400px;
+            background-color: #4A90E2;
+            border-radius: 12px;
+            color: white;
+            padding: 20px;
+            text-align: center;
         }
 
-        /* Responsive Grid */
-        @media (max-width: 600px) {
-            .dashboard {
+        @media (max-width: 768px) {
+            .dashboard-cards {
                 grid-template-columns: 1fr;
             }
         }
@@ -140,34 +160,25 @@
             <div class="card">
                 <h3>Mood Tracker</h3>
                 <p>Track how you feel daily and observe patterns.</p>
+                <a href="#" class="btn">Start Tracking</a>
             </div>
             <div class="card">
                 <h3>Your Journal</h3>
                 <p>Write your thoughts and reflections.</p>
+                <h2><a href="/journal" class="btn">Start Journaling</a>
+            </div>
+            <div class="card">
+                <h2><a href="{% url 'intelligence_test' %}" class="btn">Intelligence Test</a></h2>
+                <p>Understand your cognitive strengths.</p>
+            </div>
+            <div class="card">
+                <h2><a href="{% url 'personality_test' %}" class="btn">Personality Test</a></h2>
+                <p>Discover your personality type.</p>
             </div>
         </div>
-
-        <!-- INTELLIGENCE TEST -->
-        <div class="card">
-            <h2><a href="{% url 'intelligence_test' %}" class="btn">INTELLIGENCE TEST</a></h2>
-            <p>Track your daily feelings and observe patterns.</p>
-        </div>
-
-        <!-- PERSONALITY TEST -->
-        <div class="card">
-            <h2><a href="{% url 'personality_test' %}" class="btn">PERSONALITY TEST</a></h2>
-            <p>Track your daily feelings and observe patterns.</p>
+        <div class="progress-tracker">
+            <h3><a href="{% url 'track' %}" class="btn">Start Your Progress Tracker</a></h3>
         </div>
     </div>
-
-    <!-- Progress Tracker -->
-    <div class="card progress-tracker">
-        <h2><a href="{% url 'track' %}" class="btn">Start Your Progress Tracker</a></h2>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Mental Wellness App</p>
-    </footer>
 </body>
 </html>

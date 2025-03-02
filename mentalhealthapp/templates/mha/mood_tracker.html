@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mood Tracker</h1>
+        
+        <form id="moodForm">
+            {% csrf_token %}
+            <label for="mood">How do you feel today?</label>
+            <select id="mood" name="mood" required>
+                <option value="happy">😊 Happy</option>
+                <option value="neutral">😐 Neutral</option>
+                <option value="sad">😢 Sad</option>
+                <option value="anxious">😰 Anxious</option>
+                <option value="excited">🤩 Excited</option>
+                <option value="tired">😴 Tired</option>
+            </select>
+
+            <label for="comment">Mood Journal:</label>
+            <textarea id="comment" name="comment" rows="3" placeholder="Write your thoughts..."></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <h2>Mood History</h2>
+        <div id="moodHistory"></div>
+
+        <h2>Mood Analytics</h2>
+        <canvas id="moodChart"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("moodForm");
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                
+                let formData = new FormData(form);
+                
+                fetch("/mood-tracker/", {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    loadMoodHistory();
+                    loadMoodChart();
+                });
+            });
+
+            function loadMoodHistory() {
+                fetch("/mood-history/")
+                .then(response => response.json())
+                .then(data => {
+                    let historyDiv = document.getElementById("moodHistory");
+                    historyDiv.innerHTML = "";
+                    data.forEach(mood => {
+                        historyDiv.innerHTML += `<p>${mood.date}: ${mood.mood} - ${mood.comment}</p>`;
+                    });
+                });
+            }
+
+            function loadMoodChart() {
+                fetch("/mood-data/")
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('moodChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: Object.keys(data),
+                            datasets: [{
+                                data: Object.values(data),
+                                backgroundColor: ['#FFEB3B', '#8BC34A', '#F44336', '#2196F3', '#FFC107', '#9C27B0'],
+                            }]
+                        }
+                    });
+                });
+            }
+
+            loadMoodHistory();
+            loadMoodChart();
+        });
+    </script>
+</body>
+</html>
